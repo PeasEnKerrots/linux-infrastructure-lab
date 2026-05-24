@@ -35,7 +35,7 @@ Hands-on Linux infrastructure lab featuring server administration, networking, a
 
 Created Linux users, groups, and shared directories with proper permissions.
 
-![People and Groups](screenshots/people-and-groups.png)
+![People and Groups](screenshots/People_And_Groups.png)
 
 ---
 
@@ -43,7 +43,7 @@ Created Linux users, groups, and shared directories with proper permissions.
 
 Verified restricted access between users and departments.
 
-![Permission Restrictions](screenshots/takagio-cant-touch.png)
+![Permission Restrictions](screenshots/Takagi_Cant_Touch.png)
 
 ---
 
@@ -51,7 +51,7 @@ Verified restricted access between users and departments.
 
 Configured and deployed an Apache web server.
 
-![Apache Running](screenshots/apache-working.png)
+![Apache Running](screenshots/Apache_Website.png)
 
 ---
 
@@ -59,12 +59,12 @@ Configured and deployed an Apache web server.
 
 Configured a static IP address and successfully connected remotely from a Windows machine using SSH.
 
-![SSH Session](screenshots/static-ip-ssh.png)
+![SSH Session](screenshots/StaticIP_And_SSH.png)
 
 ---
 
 # Automated User Provisioning Script
-
+![Provisioning Script](screenshots/IDM_Script.png)
 Created a Bash automation script that:
 - Accepts employee name and department input
 - Automatically generates unique usernames
@@ -106,7 +106,7 @@ systemctl is-active sshd
 ---
 
 # Cron Job Automation
-
+![Simple Cron Job](screenshots/Simple_Chron_Job.png)
 Configured a cron job to automatically execute the monitoring script and append results to a log file every 5 minutes.
 
 ```bash
