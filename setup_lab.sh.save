@@ -1,0 +1,96 @@
+cleaclearaas# Dynamic Linux User Provisioning Script
+
+```bash
+#!/bin/bash
+
+read -p "Enter employee name: " fullname
+read -p "Enter department: " department
+
+# Convert to lowercase username base
+username=$(echo "$fullname" | tr '[:upper:]' '[:lower:]' | tr -d ' ')
+
+# Auto-create unique username if duplicate exists
+base_username=$username
+counter=1
+
+while id "$username" &>/dev/null; do
+    username="${base_username}${counter}"
+    ((counter++))
+done
+
+# Normalize department name
+department=$(echo "$department" | tr '[:upper:]' '[:lower:]')
+
+# Create department group if it does not exist
+if ! getent group "$department" > /dev/null; then
+    groupadd "$department"
+    echo "Created group: $department"
+else
+    echo "Group already exists: $department"
+fi
+
+# Create user
+useradd "$username"
+
+echo "Created user: $username"
+
+# Add user to department group
+usermod -aG "$department" "$username"
+
+# Create shared department directory if needed
+shared_dir="/shared-$department"
+
+if [ ! -d "$shared_dir" ]; then
+    mkdir "$shared_dir"
+    chgrp "$department" "$shared_dir"
+    chmod 770 "$shared_dir"
+
+    echo "Created shared directory: $shared_dir"
+else
+    echo "Shared directory already exists: $shared_dir"
+fi
+
+# Ensure permissions stay correct
+chgrp "$department" "$shared_dir"
+chmod 770 "$shared_dir"
+
+# Display final summary
+
+echo "------------------------------"
+echo "Provisioning Complete"
+echo "Username: $username"
+echo "Department: $department"
+echo "Shared Directory: $shared_dir"
+echo "------------------------------"
+```
+
+## Run the Script
+
+```bash
+chmod +x setup_lab.sh
+sudo ./setup_lab.sh
+```
+
+## Example
+
+Input:
+
+```text
+Enter employee name: Takagi
+Enter department: Sales
+```
+
+Possible output:
+
+```text
+Created user: takagi
+Created group: sales
+Created shared directory: /shared-sales
+```
+
+If another Takagi is created later:
+
+```text
+Created user: takagi1
+```
+
